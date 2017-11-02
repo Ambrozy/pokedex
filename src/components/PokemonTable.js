@@ -14,13 +14,11 @@ function mapStateToProps(state) {
 function filterPokemons(item, input, activeTag) {
   const inputOK = !isString(item.name) || item.name.indexOf(input || '') !== -1;
   const tagsOK = !activeTag || item.types.findIndex((item) => item.type.name === activeTag) !== -1;
-  return inputOK && tagsOK;
+  return item.id && inputOK && tagsOK;
 }
 
 function PokemonTable(props) {
-  const filteredPokemons = props.pokemons.filter((item) =>
-    filterPokemons(item, props.input, props.activeTag)
-  );
+  const filteredPokemons = props.pokemons.filter((item) => filterPokemons(item, props.input, props.activeTag));
   return (
     <table className="table">
       <thead>
@@ -38,7 +36,7 @@ function PokemonTable(props) {
       <tbody>
         {
           filteredPokemons.map((pokemon) => (
-            <tr key={pokemon.id}>
+            <tr>
               <th scope="row">{pokemon.id}</th>
               <td><img src={get(pokemon, 'sprites.front_default')} alt={pokemon.name} height="64" crossOrigin="anonymous"/></td>
               <td>{pokemon.name}</td>

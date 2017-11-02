@@ -1,12 +1,12 @@
 const api = {
   getPokemon: (id) =>
-    fetch(`http://pokeapi.co/api/v2/pokemon/${id}/`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
       .then((resp) => resp.json()),
   getPokemonList: (limit = 20, offset = 0) =>
-    fetch(`http://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`)
       .then((resp) => resp.json()),
   getPokemonTypeList: () =>
-    fetch(`http://pokeapi.co/api/v2/type/`)
+    fetch(`https://pokeapi.co/api/v2/type/`)
       .then((resp) => resp.json())
       .then((json) => json.results.map((item) => item.name)),
 }

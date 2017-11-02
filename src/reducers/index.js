@@ -11,6 +11,7 @@ const initialState = fromJS({
 });
 
 const store = (state = initialState, action) => {
+  const pokemons = state.get('pokemons');
   switch (action.type) {
     case 'FILTER_BY_NAME':
       return state.set('input', isString(action.payload) ? action.payload : "");
@@ -19,9 +20,10 @@ const store = (state = initialState, action) => {
 
     case 'POKEMON_AMOUNT_LOADED':
       return state.set('pokemonAmount', +action.payload || 0);
+    case 'START_LOADING':
+      return state;
     case 'POKEMON_LOADED':
-      const pokemons = state.get('pokemons').splice(action.payload.id, 0, action.payload);
-      return state.set('pokemons', pokemons);
+      return state.set('pokemons', pokemons.insert(action.payload.id - 1, action.payload).sortBy((item) => item.id));
     case 'POKEMON_TYPES_LOADED':
       if (isArray(action.payload)) {
         return state.set('tags', action.payload);

@@ -5,13 +5,14 @@ import './index.css';
 
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import { List } from 'immutable';
 import pokemonApp from './reducers';
 import actions from './actions';
 
 const store = createStore(pokemonApp);
-actions.loadPokemons([], store.dispatch, store.getState().get('limit'), store.getState().get('offset'));
-actions.loadPokemonAmount(store.dispatch);
 actions.loadTags(store.dispatch);
+actions.loadPokemonAmount(store.dispatch);
+actions.loadPokemons(List(), store.dispatch, store.getState().get('limit'), store.getState().get('offset'));
 
 ReactDOM.render(
   <Provider store={store}>

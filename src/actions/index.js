@@ -10,11 +10,19 @@ function loadPokemonAmount(dispatch) {
     });
 }
 function loadPokemons(pokemons, dispatch, limit = 50, offset = 0) {
+  dispatch({
+    type: 'START_LOADING',
+    payload: {
+      limit,
+      offset
+    },
+  });
   let loadError = false;
   const handleError = () => { loadError = true };
-  for (let i = 1; i <= limit && !loadError; i++) {
-    if (pokemons[i + offset] === undefined) {
-      loadPokemon(dispatch, i + offset)
+  for (let i = 0; i < limit && !loadError; i++) {
+    const pokemon = pokemons.get(i + offset);
+    if (!pokemon || !pokemon.id) {
+      loadPokemon(dispatch, i + offset + 1)
         .catch(handleError);
     }
   }
